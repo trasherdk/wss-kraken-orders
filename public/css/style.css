@@ -1,0 +1,81 @@
+.equi {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  list-style-type: none;
+}
+
+#chart-area svg {
+	margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#logo {
+	height:50px;
+}
+
+.navbar-brand {
+	height: 60px;
+	padding: 5px 0px;
+}
+
+.black {
+	/*background-color: #444444;*/
+	background-color: rgba(0,0,0,0.9);
+}
+
+.axisWhite line{
+	stroke: white;
+  }
+  
+  .axisWhite path{
+	stroke: white;
+  }
+  
+  .axisWhite text{
+	fill: white;
+  } 
+
+.ask-rect {
+  fill: rgba(255,0,0,0.1);
+  stroke: red;
+  stroke-width: 1px;
+}
+
+.bid-rect {
+	fill: rgba(0,255,0,0.1);
+	stroke: green;
+	stroke-width: 1px;
+}
+
+div.tooltip {	
+    position: absolute;			
+	text-align: center;	
+	background-color: rgba(0,0,0,0.6);		
+    /*width: 120px;	*/				
+    height: 46px;					
+	padding: 2px 20px;
+	color: white;				
+    font-size: 28px;
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;			
+}
+
+.svg-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+  vertical-align: middle;
+  overflow: hidden;
+  }
+
+  .svg-content {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    }
