@@ -14,7 +14,7 @@ const io = require('socket.io')(server);
 
 const EventEmitter = require('events');
 
-const ORDER_BOOK_DEPTH = 100;
+const ORDER_BOOK_DEPTH = 25;
 const PRICE_DECIMALS = 1;
 
 class MyEmitter extends EventEmitter { };
