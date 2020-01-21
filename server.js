@@ -1,4 +1,17 @@
+// pour wsClient de Kraken :
 const WebSocket = require('ws');
+
+const express = require("express")
+const app = express();
+const path = require('path');
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+const server = require('http').Server(app);
+
+// pour le ws server :
+const io = require('socket.io')(server);
+
 const EventEmitter = require('events');
 
 const ORDER_BOOK_DEPTH = 100;
@@ -127,21 +140,27 @@ wsClient.on('message', function incoming(data) {
     myEmitter.emit('event', formattedData);
 });
 
-
-const wss = new WebSocket.Server({ port: 8080 });
-
-wss.on('connection', function connection(ws) {
+// this ws server
+io.on('connection', socket => {
 
     setTimeout(() => {
-        console.log('closing websocket');
-        ws.close();
+        //console.log('closing websocket');
+        socket.disconnect();
     }, 60000);
 
-    ws.on('message', function incoming(message) {
+    socket.on('message', msg => {
         console.log('received: %s', message);
     });
 
     myEmitter.on('event', (payload) => {
-        ws.send(JSON.stringify(payload));
+        io.emit('message', payload);
     });
-});
+  });
+
+if (module === require.main) {
+    const PORT = process.env.PORT || 8080;
+    server.listen(PORT, () => {
+      console.log(`App listening on port ${PORT}`);
+      console.log('Press Ctrl+C to quit.');
+    });
+  }
