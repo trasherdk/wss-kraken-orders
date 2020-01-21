@@ -1,13 +1,9 @@
 
 # local
 
-back :
+back et front :
 ```
 npm run start
 ```
 
-front :
-```
-cd public
-npx http-server -p 8090
-```
+[https://kraken-orders.herokuapp.com/](https://kraken-orders.herokuapp.com/)
