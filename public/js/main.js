@@ -1,5 +1,4 @@
-/* global constants */
-//const WS_URL = "ws://localhost:8080";
+
 
 /* graphical constants */
 const TRANSITION_DURATION = 20;
@@ -59,33 +58,41 @@ const mouseOutTouchEnd = d => {
 let resolvedPriceText;
 let resolvedPriceLine;
 
-//let socket = new WebSocket(WS_URL);
-let socket = io();
 
-socket.on('connect', msg => {
-    console.log("connexion established");
-})
+var loc = window.location, new_uri;
+if (loc.protocol === "https:") {
+    new_uri = "wss:";
+} else {
+    new_uri = "ws:";
+}
+const WS_URL = new_uri + "//" + loc.hostname + ":8081";
 
-socket.on('message', function(data){
-    updateVisualisation(data["orderBook"], data["resolvedPrice"])
-  });
+let socket = new WebSocket(WS_URL);
 
-  socket.on("disconnect", function(){
+socket.onopen = function (e) {
+    console.log("connexion established")
+};
+
+socket.onmessage = function (event) {
+    //console.log(`[message] Data received from server: ${event.data}`);
+    var jsonObject = JSON.parse(event.data);
+    updateVisualisation(jsonObject["orderBook"], jsonObject["resolvedPrice"])
+};
+
+socket.onclose = function (event) {
     document.getElementById("info").innerHTML = "WS closed. Please reload"
-      console.log('disconnect');
-      /*
     if (event.wasClean) {
         console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
     } else {
+        // e.g. server process killed or network down
+        // event.code is usually 1006 in this case
         console.log('[close] Connection died');
     }
-    */
-});
+};
 
-socket.on("error", function(){
+socket.onerror = function (error) {
     console.log(`[error] ${error.message}`);
-});
-
+};
 
 
 
