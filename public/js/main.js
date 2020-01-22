@@ -72,13 +72,14 @@ socket.on('message', function(data){
 
   socket.on("disconnect", function(){
     document.getElementById("info").innerHTML = "WS closed. Please reload"
+      console.log('disconnect');
+      /*
     if (event.wasClean) {
         console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
     } else {
-        // e.g. server process killed or network down
-        // event.code is usually 1006 in this case
         console.log('[close] Connection died');
     }
+    */
 });
 
 socket.on("error", function(){
