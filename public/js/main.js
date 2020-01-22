@@ -65,7 +65,7 @@ if (loc.protocol === "https:") {
 } else {
     new_uri = "ws:";
 }
-const WS_URL = new_uri + "//" + loc.hostname + ":8081";
+const WS_URL = new_uri + "//" + loc.hostname + ":8080";
 
 let socket = new WebSocket(WS_URL);
 

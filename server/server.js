@@ -13,7 +13,7 @@ const server = require('http').Server(app);
 
 // pour le ws server :
 const wss = new WebSocket.Server({
-    port: 8081
+    server: server
 });
 
 require('./kraken-client.js');
