@@ -1,17 +1,32 @@
 const WebSocket = require('ws');
-var fs = require('fs');
+/*
+const fs = require('fs');
+*/
+const myEmitter = require('./emitter');
 
+/*
+Optional - depth associated with book subscription in float of levels each side, default 10. 
+Valid Options are: 10, 25, 100, 500, 1000
+*/
 const ORDER_BOOK_DEPTH = 25;
 const PRICE_DECIMALS = 1;
-
-const myEmitter = require('./emitter');
 
 const apiBookFromKraken = { "bid": {}, "ask": {} };
 
 const apiUpdateBook = (side, data) => {
+    /*
+    https://support.kraken.com/hc/en-us/articles/360027821131-How-to-maintain-a-valid-order-book-
+    https://support.kraken.com/hc/en-us/articles/360027678792-Example-order-book-transcript
+    */
+    //console.log('apiUpdateBook ' + side + ', ' + JSON.stringify(data))
     for (x of data) {
         const priceLevel = parseFloat(x[0]);
         const volume = parseFloat(x[1]);
+        /*
+        https://docs.kraken.com/websockets/#message-book
+        Price level volume, for updates
+        volume = 0 for level removal/deletion
+        */
         if (volume !== 0) {
             apiBookFromKraken[side][priceLevel] = volume;
         } else {
@@ -20,6 +35,9 @@ const apiUpdateBook = (side, data) => {
     }
 }
 
+/*
+https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/reduce
+*/
 const reducer = (accumulator, currentValue) => {
     const price = +currentValue[0];
     const truncatedPrice = price.toFixed(PRICE_DECIMALS);
@@ -36,7 +54,6 @@ const getForVisualisation = () => {
     const orderBook = [];
 
     const unorderedAsks = apiBookFromKraken["ask"];
-
     const asks = Object.keys(unorderedAsks)
         .sort()
         .map((cle) => [cle, unorderedAsks[cle]]);
@@ -58,7 +75,6 @@ const getForVisualisation = () => {
     orderBook.push(...askData);
 
     const unorderedBids = apiBookFromKraken["bid"];
-    //console.log(side + " " + JSON.stringify(unOrderedSideData));
     const bids = Object.keys(unorderedBids)
         .sort((a, b) => b - a)
         .map((cle) => [cle, unorderedBids[cle]]);
@@ -78,7 +94,6 @@ const getForVisualisation = () => {
     })
     orderBook.push(...bidData);
 
-    // sort and update graph
     orderBook.sort((a, b) => a.price - b.price)
 
     const retour = {
@@ -99,7 +114,7 @@ const getForVisualisation = () => {
 }
 
 const wsClient = new WebSocket('wss://ws.kraken.com/');
-
+/* https://docs.kraken.com/websockets/#message-subscribe */
 const payload = {
     "event": "subscribe",
     "pair": ["ETH/EUR"],
@@ -119,6 +134,10 @@ wsClient.on('message', function incoming(data) {
     if (!jsonData[1]) {
         return;
     }
+    /*
+    https://support.kraken.com/hc/en-us/articles/360027678792-Example-order-book-transcript
+    https://support.kraken.com/hc/en-us/articles/360027821131-How-to-maintain-a-valid-order-book-
+    */
     if ('as' in jsonData[1]) {
         apiUpdateBook("ask", jsonData[1]["as"]);
     }

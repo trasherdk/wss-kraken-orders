@@ -3,6 +3,8 @@ const express = require("express")
 const path = require('path');
 const myEmitter = require('./emitter');
 
+const SECONDS_SERVED = 60000;
+
 /* execs this .js : */
 require('./kraken-client.js');
 
@@ -16,9 +18,13 @@ app.use('/d3',
     express.static(
         path.join(__dirname, '../node_modules/d3/dist/')
     ));
+app.use('/jquery',
+    express.static(
+        path.join(__dirname, '../node_modules/jquery/dist/')
+    ));
 app.use('/bootstrap',
     express.static(
-        path.join(__dirname, '../node_modules/bootstrap/dist/css/')
+        path.join(__dirname, '../node_modules/bootstrap/dist/')
     ));
 const server = require('http').Server(app);
 /* 
@@ -34,10 +40,18 @@ const wss = new WebSocket.Server({
 /* websocket events: */
 wss.on('connection', ws => {
 
+    let progress = 0;
+
+    const interval = setInterval(() => {
+        progress += 1;
+        ws.send(JSON.stringify({ percent: progress }));
+    }, SECONDS_SERVED / 100);
+
     setTimeout(() => {
         console.log('closing websocket');
         ws.close();
-    }, 60000);
+        clearInterval(interval);
+    }, SECONDS_SERVED);
 
     ws.on('message', function incoming(message) {
         console.log('received: %s', message);

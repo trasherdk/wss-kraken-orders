@@ -3,10 +3,10 @@
 /* graphical constants */
 const TRANSITION_DURATION = 20;
 
-const margin = { left: 0, right: 200, top: 80, bottom: 80 };
-
-const width = 500 - margin.left - margin.right;
-const height = 600 - margin.top - margin.bottom;
+const margin = { left: 75, right: 75, top: 30, bottom: 80 };
+const width = 400 - margin.left - margin.right;
+const height = 500 - margin.top - margin.bottom;
+const resolvedPriceLineLength = 250;
 
 const t = d3.transition().duration(TRANSITION_DURATION);
 
@@ -58,7 +58,6 @@ const mouseOutTouchEnd = d => {
 let resolvedPriceText;
 let resolvedPriceLine;
 
-
 var loc = window.location, new_uri;
 if (loc.protocol === "https:") {
     new_uri = "wss:";
@@ -76,13 +75,20 @@ socket.onopen = function (e) {
 socket.onmessage = function (event) {
     //console.log(`[message] Data received from server: ${event.data}`);
     var jsonObject = JSON.parse(event.data);
-    updateVisualisation(jsonObject["orderBook"], jsonObject["resolvedPrice"])
+    if(jsonObject['percent']) {
+        incrementProgressBar(jsonObject['percent']);
+    } else {
+        updateVisualisation(jsonObject["orderBook"], jsonObject["resolvedPrice"])
+    }
 };
 
 socket.onclose = function (event) {
-    document.getElementById("info").innerHTML = "WS closed. Please reload"
     if (event.wasClean) {
         console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+        const progressBar = document.querySelector('.progress-bar');
+        progressBar.style.width = '100%';
+        progressBar.innerHTML = "WS closed. Please reload";
+        document.querySelector('.progress').classList.add('height-35');
     } else {
         // e.g. server process killed or network down
         // event.code is usually 1006 in this case
@@ -94,7 +100,11 @@ socket.onerror = function (error) {
     console.log(`[error] ${error.message}`);
 };
 
+function incrementProgressBar(percent) {
+    document.querySelector('.progress-bar').style.width = percent + '%';
+}
 
+let ALL_TIME_MAX_VOLUME = null;
 
 /**
  * Updates the graph from the transformed data
@@ -103,8 +113,12 @@ socket.onerror = function (error) {
  */
 function updateVisualisation(data, resolvedPrice) {
 
+    let dataMaxVolume = d3.max(data, d => d.volume);
+    let max = Math.max(ALL_TIME_MAX_VOLUME, dataMaxVolume);
+    ALL_TIME_MAX_VOLUME = max;
+
     y.domain(data.map(d => d.price));
-    x.domain([0, d3.max(data, d => d.volume)])
+    x.domain([0, max])
 
     // X Axis
     var xAxisCall = d3.axisBottom(x)
@@ -165,7 +179,7 @@ function updateVisualisation(data, resolvedPrice) {
 
     resolvedPriceText = g.append("text")
         .attr("y", y(resolvedPrice))
-        .attr("x", width + 50)
+        .attr("x", width - resolvedPriceLineLength)
         .attr("fill", "white")
         .attr("font-size", "28px")
         .text(resolvedPrice + "€");
@@ -176,8 +190,8 @@ function updateVisualisation(data, resolvedPrice) {
     resolvedPriceLine = g.append("line")
         .style("stroke", "white")
         .style("z-index", "-1")
-        .attr("x1", width)
-        .attr("y1", y(resolvedPrice))
-        .attr("x2", width + 50)
-        .attr("y2", y(resolvedPrice));
+        .attr("x1", width - resolvedPriceLineLength)
+        .attr("x2", width)
+        .attr("y1", y(resolvedPrice) + y.bandwidth()/2)
+        .attr("y2", y(resolvedPrice) + y.bandwidth()/2);
 }

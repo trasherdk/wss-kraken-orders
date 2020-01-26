@@ -2,28 +2,52 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta name="description" content="">
     <title>ETH EUR Order Book (Kraken data)</title>
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <!-- Custom styling -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <nav class="navbar navbar-default">
-        <ul class="equi">
-            <li>
-                <a href="https://www.kraken.com/" target="_blank">https://www.kraken.com/</a>
-            </li>
-            <li>
-                <h6 id="info"></h6>
-            </li>
-            <li>
-                <h6>ETHEUR Order Book</h6>
-            </li>
-        </ul>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">ETHEUR Order Book</a>
+        <button 
+            class="navbar-toggler" 
+            type="button" 
+            data-toggle="collapse" 
+            data-target="#navbarSupportedContent" 
+            aria-controls="navbarSupportedContent" 
+            aria-expanded="false" 
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a 
+                    class="nav-link" 
+                    href="https://www.kraken.com/" 
+                    target="_blank"
+                >
+                    Kraken data
+                </a>
+              </li>
+              <li class="nav-item">
+                <a 
+                    class="nav-link" 
+                    href="https://support.kraken.com/hc/en-us/articles/115000364388-Trading-glossary" 
+                    target="_blank"
+                >
+                    Bid/Ask Depth
+                </a>
+              </li>
+            </ul>
+        </div>
     </nav>
 
     <!-- Bootstrap grid setup -->
@@ -34,8 +58,18 @@
             </div>
         </div>
     </div>
+    <div class="container">
+        <div class="progress mt-3"> 
+            <div 
+                class="progress-bar bg-success progress-bar-animated" 
+                style="width:0%"
+            ></div> 
+        </div>
+    </div>
 
 <!-- External JS libraries -->
+<script src="/jquery/jquery.min.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
 <script src="/d3/d3.min.js"></script>
 <!-- Custom JS -->
 <script src="js/main.js"></script>

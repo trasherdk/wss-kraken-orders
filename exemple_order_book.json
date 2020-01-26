@@ -1,120 +1,90 @@
 {
     "orderBook": [
         {
-            "price": "144.8",
-            "volume": 2049.6757598500003,
+            "price": "150.0",
+            "volume": 1680.99580812,
             "type": "bid"
         },
         {
-            "price": "144.9",
-            "volume": 2008.7850141600002,
+            "price": "150.1",
+            "volume": 1619.84280812,
             "type": "bid"
         },
         {
-            "price": "145.0",
-            "volume": 1905.6383480000002,
+            "price": "150.2",
+            "volume": 1571.84280812,
             "type": "bid"
         },
         {
-            "price": "145.1",
-            "volume": 1584.0273295000002,
+            "price": "150.3",
+            "volume": 1147.13880812,
             "type": "bid"
         },
         {
-            "price": "145.2",
-            "volume": 1263.0113295,
+            "price": "150.4",
+            "volume": 726.38620812,
             "type": "bid"
         },
         {
-            "price": "145.3",
-            "volume": 988.6213295,
+            "price": "150.6",
+            "volume": 481.41667347,
             "type": "bid"
         },
         {
-            "price": "145.4",
-            "volume": 954.2213295,
+            "price": "150.7",
+            "volume": 480.20779225999996,
             "type": "bid"
         },
         {
-            "price": "145.5",
-            "volume": 494.54529948,
+            "price": "150.8",
+            "volume": 310.55120228,
             "type": "bid"
         },
         {
-            "price": "145.6",
-            "volume": 400.11211254,
+            "price": "150.9",
+            "volume": 81.72820228,
             "type": "bid"
         },
         {
-            "price": "145.7",
-            "volume": 189.21699999999998,
-            "type": "bid"
-        },
-        {
-            "price": "145.8",
-            "volume": 145.85,
+            "price": "151.0",
+            "volume": 28.7541345,
             "type": "ask"
         },
         {
-            "price": "145.8",
-            "volume": 103.733,
-            "type": "bid"
-        },
-        {
-            "price": "145.9",
-            "volume": 174.85,
+            "price": "151.1",
+            "volume": 227.3327545,
             "type": "ask"
         },
         {
-            "price": "146.0",
-            "volume": 219.018,
+            "price": "151.2",
+            "volume": 231.7331245,
             "type": "ask"
         },
         {
-            "price": "146.1",
-            "volume": 237.7869,
+            "price": "151.3",
+            "volume": 569.57058672,
             "type": "ask"
         },
         {
-            "price": "146.2",
-            "volume": 822.4514561799999,
+            "price": "151.4",
+            "volume": 743.92515017,
             "type": "ask"
         },
         {
-            "price": "146.3",
-            "volume": 1038.45045618,
+            "price": "151.5",
+            "volume": 764.1575638500001,
             "type": "ask"
         },
         {
-            "price": "146.4",
-            "volume": 1120.40018511,
+            "price": "151.6",
+            "volume": 1234.97290292,
             "type": "ask"
         },
         {
-            "price": "146.5",
-            "volume": 1120.7501851099998,
-            "type": "ask"
-        },
-        {
-            "price": "146.6",
-            "volume": 1136.7929110399998,
-            "type": "ask"
-        },
-        {
-            "price": "146.7",
-            "volume": 1136.8556369699998,
-            "type": "ask"
-        },
-        {
-            "price": "146.8",
-            "volume": 2297.52563697,
-            "type": "ask"
-        },
-        {
-            "price": "146.9",
-            "volume": 2388.08531184,
+            "price": "151.7",
+            "volume": 1241.01562885,
             "type": "ask"
         }
     ],
-    "resolvedPrice": "145.8"
+    "resolvedPrice": "151.0"
 }

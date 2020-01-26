@@ -1,27 +1,8 @@
-.equi {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  list-style-type: none;
-  height: 50px;
-margin: 0;
-padding: 0 20px;
-}
 
 #chart-area svg {
 	margin-left: auto;
     margin-right: auto;
     display: block;
-}
-
-#logo {
-	height:50px;
-}
-
-.navbar-brand {
-	height: 60px;
-	padding: 5px 0px;
 }
 
 .black {
@@ -49,7 +30,7 @@ padding: 0 20px;
 
 .bid-rect {
 	fill: rgba(0,255,0,0.1);
-	stroke: green;
+	stroke: #28a745;
 	stroke-width: 1px;
 }
 
@@ -82,3 +63,9 @@ div.tooltip {
     top: 0;
     left: 0;
     }
+
+.height-35 {
+  height: 40px;
+  font-size: 1.25rem;
+  transition: height 1s ease-in, font-size 1s ease-in;
+}
