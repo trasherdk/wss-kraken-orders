@@ -1,0 +1,120 @@
+{
+    "orderBook": [
+        {
+            "price": "144.8",
+            "volume": 2049.6757598500003,
+            "type": "bid"
+        },
+        {
+            "price": "144.9",
+            "volume": 2008.7850141600002,
+            "type": "bid"
+        },
+        {
+            "price": "145.0",
+            "volume": 1905.6383480000002,
+            "type": "bid"
+        },
+        {
+            "price": "145.1",
+            "volume": 1584.0273295000002,
+            "type": "bid"
+        },
+        {
+            "price": "145.2",
+            "volume": 1263.0113295,
+            "type": "bid"
+        },
+        {
+            "price": "145.3",
+            "volume": 988.6213295,
+            "type": "bid"
+        },
+        {
+            "price": "145.4",
+            "volume": 954.2213295,
+            "type": "bid"
+        },
+        {
+            "price": "145.5",
+            "volume": 494.54529948,
+            "type": "bid"
+        },
+        {
+            "price": "145.6",
+            "volume": 400.11211254,
+            "type": "bid"
+        },
+        {
+            "price": "145.7",
+            "volume": 189.21699999999998,
+            "type": "bid"
+        },
+        {
+            "price": "145.8",
+            "volume": 145.85,
+            "type": "ask"
+        },
+        {
+            "price": "145.8",
+            "volume": 103.733,
+            "type": "bid"
+        },
+        {
+            "price": "145.9",
+            "volume": 174.85,
+            "type": "ask"
+        },
+        {
+            "price": "146.0",
+            "volume": 219.018,
+            "type": "ask"
+        },
+        {
+            "price": "146.1",
+            "volume": 237.7869,
+            "type": "ask"
+        },
+        {
+            "price": "146.2",
+            "volume": 822.4514561799999,
+            "type": "ask"
+        },
+        {
+            "price": "146.3",
+            "volume": 1038.45045618,
+            "type": "ask"
+        },
+        {
+            "price": "146.4",
+            "volume": 1120.40018511,
+            "type": "ask"
+        },
+        {
+            "price": "146.5",
+            "volume": 1120.7501851099998,
+            "type": "ask"
+        },
+        {
+            "price": "146.6",
+            "volume": 1136.7929110399998,
+            "type": "ask"
+        },
+        {
+            "price": "146.7",
+            "volume": 1136.8556369699998,
+            "type": "ask"
+        },
+        {
+            "price": "146.8",
+            "volume": 2297.52563697,
+            "type": "ask"
+        },
+        {
+            "price": "146.9",
+            "volume": 2388.08531184,
+            "type": "ask"
+        }
+    ],
+    "resolvedPrice": "145.8"
+}

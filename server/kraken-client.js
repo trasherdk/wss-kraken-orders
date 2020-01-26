@@ -1,4 +1,5 @@
 const WebSocket = require('ws');
+var fs = require('fs');
 
 const ORDER_BOOK_DEPTH = 25;
 const PRICE_DECIMALS = 1;
@@ -35,7 +36,7 @@ const getForVisualisation = () => {
     const orderBook = [];
 
     const unorderedAsks = apiBookFromKraken["ask"];
-    
+
     const asks = Object.keys(unorderedAsks)
         .sort()
         .map((cle) => [cle, unorderedAsks[cle]]);
@@ -59,7 +60,7 @@ const getForVisualisation = () => {
     const unorderedBids = apiBookFromKraken["bid"];
     //console.log(side + " " + JSON.stringify(unOrderedSideData));
     const bids = Object.keys(unorderedBids)
-        .sort((a,b) => b - a)
+        .sort((a, b) => b - a)
         .map((cle) => [cle, unorderedBids[cle]]);
     const bidMapResultat = bids.reduce(reducer, new Map());
     const bidData = [];
@@ -80,10 +81,21 @@ const getForVisualisation = () => {
     // sort and update graph
     orderBook.sort((a, b) => a.price - b.price)
 
-    return {
+    const retour = {
         orderBook: orderBook,
         resolvedPrice: resolvedPrice
     };
+
+    // pour démo
+    /*
+    fs.writeFile('exemple_order_book.json',
+        JSON.stringify(retour, null, 4),
+        function (err, result) {
+            if (err) console.log('error', err);
+        });
+    */
+
+    return retour;
 }
 
 const wsClient = new WebSocket('wss://ws.kraken.com/');
