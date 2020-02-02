@@ -1,3 +1,10 @@
+/*
+fetch('exemple_order_book.json')
+    .then(data => data.json())
+    .then(jsonObject => {
+        orderBook.updateVisualisation(jsonObject["orderBook"], jsonObject["resolvedPrice"])
+    })
+*/
 
 let loc = window.location, new_uri;
 if (loc.protocol === "https:") {
