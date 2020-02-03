@@ -2,7 +2,7 @@ const orderBook = (function () {
     'use strict';
 
     /* graphical constants */
-    const TRANSITION_DURATION = 20;
+    const TRANSITION_DURATION = 100;
 
     const margin = { left: 75, right: 75, top: 30, bottom: 80 };
     const width = 400 - margin.left - margin.right;
@@ -99,36 +99,39 @@ const orderBook = (function () {
                 .call(yAxisCall);
 
             // JOIN new data with old elements.
-            var rects = g.selectAll("rect")
-                .data(data, d => d.price);
-
-            // EXIT old elements not present in new data.
-            rects.exit()
-                /*.transition(t)*/
-                .attr("x", x(0))
-                .attr("width", 0)
-                .remove();
-
-            // ENTER new elements present in new data...
-            rects.enter()
-                .append("rect")
-                .attr("class", d => (d.type === "ask" ? "ask-rect" : "bid-rect"))
-                .attr("x", x(0))
-                .attr("width", 0)
-                .attr("y", d => y(d.price))
-                .attr("height", y.bandwidth)
-                .on("mouseover", mouseOverTouchStart)
-                .on("mouseout", mouseOutTouchEnd)
-                .on("touchstart", mouseOverTouchStart)
-                .on("touchend", mouseOutTouchEnd)
-                // AND UPDATE old elements present in new data.
-                .merge(rects)
-                .transition(t)
-                .attr("y", d => y(d.price))
-                .attr("height", y.bandwidth)
-                .attr("x", d => x(d.volume))
-                .attr("class", d => (d.type === "ask" ? "ask-rect" : "bid-rect"))
-                .attr("width", d => (width - x(d.volume)));
+            g.selectAll("rect")
+                .data(data, d => d.price)
+                .join(
+                    // ENTER new elements present in new data...
+                    enter => enter.append("rect")
+                        .attr("class", d => (d.type === "ask" ? "ask-rect" : "bid-rect"))
+                        .attr("x", x(0))
+                        .attr("width", 0)
+                        .attr("y", d => y(d.price))
+                        .attr("height", y.bandwidth)
+                        .on("mouseover", mouseOverTouchStart)
+                        .on("mouseout", mouseOutTouchEnd)
+                        .on("touchstart", mouseOverTouchStart)
+                        .on("touchend", mouseOutTouchEnd)
+                        .call(
+                            enter => enter.transition().duration(TRANSITION_DURATION)
+                                .attr("x", d => x(d.volume))
+                                .attr("width", d => (width - x(d.volume)))
+                        ),
+                    // UPDATE old elements present in new data.
+                    update => update
+                        .transition().duration(TRANSITION_DURATION)
+                        .attr("y", d => y(d.price))
+                        .attr("height", y.bandwidth)
+                        .attr("class", d => (d.type === "ask" ? "ask-rect" : "bid-rect"))
+                        .attr("x", d => x(d.volume))
+                        .attr("width", d => (width - x(d.volume)))
+                        ,
+                    // EXIT old elements not present in new data.
+                    exit => exit.attr("x", x(0))
+                        .attr("width", 0)
+                        .remove()
+                );
 
             if (resolvedPriceText) {
                 resolvedPriceText.remove();

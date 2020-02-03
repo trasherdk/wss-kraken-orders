@@ -1,7 +1,9 @@
 const WebSocket = require('ws');
 const express = require("express")
 const path = require('path');
-const myEmitter = require('./emitter');
+const Rx = require('rxjs');
+const RxOp = require('rxjs/operators');
+const subject = require('./subject');
 
 const SECONDS_SERVED = 60000;
 
@@ -37,10 +39,13 @@ const wss = new WebSocket.Server({
     server: server
 });
 
+const interval$ = Rx.interval(100);
+
 /* websocket events: */
 wss.on('connection', ws => {
 
     let progress = 0;
+    let subscription = null;
 
     const interval = setInterval(() => {
         progress += 1;
@@ -50,6 +55,7 @@ wss.on('connection', ws => {
     setTimeout(() => {
         console.log('closing websocket');
         ws.close();
+        subscription.unsubscribe();
         clearInterval(interval);
     }, SECONDS_SERVED);
 
@@ -57,9 +63,14 @@ wss.on('connection', ws => {
         console.log('received: %s', message);
     });
 
-    myEmitter.on('event', (payload) => {
-        ws.send(JSON.stringify(payload));
-    });
+    subscription = subject
+        .pipe(
+            /* https://rxjs-dev.firebaseapp.com/api/operators/debounce */
+            RxOp.debounce(() => interval$)
+        )
+        .subscribe(payload => { 
+            return ws.send(JSON.stringify(payload))}
+        );
 })
 
 if (module === require.main) {

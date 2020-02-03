@@ -2,7 +2,7 @@ const WebSocket = require('ws');
 /*
 const fs = require('fs');
 */
-const myEmitter = require('./emitter');
+const subject = require('./subject');
 
 /*
 Optional - depth associated with book subscription in float of levels each side, default 10. 
@@ -152,5 +152,6 @@ wsClient.on('message', function incoming(data) {
     }
 
     const formattedData = getForVisualisation();
-    myEmitter.emit('event', formattedData);
+    
+    subject.next(formattedData);
 });
