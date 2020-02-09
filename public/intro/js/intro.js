@@ -58,10 +58,9 @@ const g = d3.select('#chart-area')
     .append("g")
     .attr("transform", "translate(" + 0 + ", " + 40 + ")");
 
-const t = d3.transition()
-    .duration(2000);
+const t = 2000;
 
-const interval = setInterval(() => {
+const shuffle = () => {
 
     g.selectAll("text")
         //tells the browser to find the svg element and look inside it for any text. If it finds text, it returns them in a selection that is an array of elements. If it doesn’t find any, it returns an empty selection, which is what will happen in this case.
@@ -76,21 +75,25 @@ const interval = setInterval(() => {
                 .attr("x", (d, i) => i * 16)
                 .attr("y", -30)
                 .text(d => d)
-                .call(enter => enter.transition().duration(2000)
+                .call(enter => enter.transition().duration(t)
                     .attr("y", 0)),
             // The update selection represents existing elements (persisting data) that you may need to modify (for example, repositioning).
             update => update
                 .attr("fill", "black")
                 .attr("y", 0)
-                .call(update => update.transition().duration(2000)
+                .call(update => update.transition().duration(t)
                     .attr("x", (d, i) => i * 16)),
             // The exit selection represents “leftover” elements (outgoing data) that you may need to remove from the document.
             // all the exited elements are stored in some invisible place ready to be removed when the command is given. And that command is remove(). remove() will remove all the 'exited' nodes from the DOM.
             exit => exit
                 .attr("fill", "brown")
-                .call(exit => exit.transition().duration(2000)
+                .call(exit => exit.transition().duration(t)
                     .attr("y", 30)
                     .remove())
         );
 
-}, 3000);
+};
+
+shuffle();
+
+const interval = setInterval(shuffle, 3000);
