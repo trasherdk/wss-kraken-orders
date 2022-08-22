@@ -15,18 +15,18 @@ const apiBookFromKraken = { bid: {}, ask: {} }
 
 const apiUpdateBook = (side, data) => {
   /*
-    https://support.kraken.com/hc/en-us/articles/360027821131-How-to-maintain-a-valid-order-book-
-    https://support.kraken.com/hc/en-us/articles/360027678792-Example-order-book-transcript
-    */
+      https://support.kraken.com/hc/en-us/articles/360027821131-How-to-maintain-a-valid-order-book-
+      https://support.kraken.com/hc/en-us/articles/360027678792-Example-order-book-transcript
+      */
   // console.log('apiUpdateBook ' + side + ', ' + JSON.stringify(data))
-  for (x of data) {
+  for (const x of data) {
     const priceLevel = parseFloat(x[0])
     const volume = parseFloat(x[1])
     /*
-        https://docs.kraken.com/websockets/#message-book
-        Price level volume, for updates
-        volume = 0 for level removal/deletion
-        */
+            https://docs.kraken.com/websockets/#message-book
+            Price level volume, for updates
+            volume = 0 for level removal/deletion
+            */
     if (volume !== 0) {
       apiBookFromKraken[side][priceLevel] = volume
     } else {
@@ -102,12 +102,12 @@ const getForVisualisation = () => {
 
   // pour démo
   /*
-    fs.writeFile('exemple_order_book.json',
-        JSON.stringify(retour, null, 4),
-        function (err, result) {
-            if (err) console.log('error', err);
-        });
-    */
+      fs.writeFile('exemple_order_book.json',
+          JSON.stringify(retour, null, 4),
+          function (err, result) {
+              if (err) console.log('error', err);
+          });
+      */
 
   return retour
 }
@@ -134,9 +134,9 @@ wsClient.on('message', function incoming (data) {
     return
   }
   /*
-    https://support.kraken.com/hc/en-us/articles/360027678792-Example-order-book-transcript
-    https://support.kraken.com/hc/en-us/articles/360027821131-How-to-maintain-a-valid-order-book-
-    */
+      https://support.kraken.com/hc/en-us/articles/360027678792-Example-order-book-transcript
+      https://support.kraken.com/hc/en-us/articles/360027821131-How-to-maintain-a-valid-order-book-
+      */
   if ('as' in jsonData[1]) {
     apiUpdateBook('ask', jsonData[1].as)
   }
