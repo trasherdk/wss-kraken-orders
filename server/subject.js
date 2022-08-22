@@ -1,5 +1,5 @@
-const Rx = require('rxjs');
+const Rx = require('rxjs')
 
-const debouncer = new Rx.Subject();
+const debouncer = new Rx.Subject()
 
-module.exports = debouncer;
+module.exports = debouncer
